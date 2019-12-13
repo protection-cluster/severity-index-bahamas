@@ -13,13 +13,13 @@ output:
     toc: yes  
 ---
 
-In this tutorial, We will see how to build a __severity index__ using a key informant interview dataset. Building such index, also called __composite indicator__, is among the regular and expected task of any humanitarian data analyst.The objective is to summarise information into a simple indicator that can reduce information overflow. __Severity index__ informs the sectoral and inter-sectoral discussions taking place as part of the Humanitarian Needs Overview (HNO) process, in particular facilitating a comparison of needs across geographic areas.
+In this tutorial, We will see how to build a __severity index__ using a key informant interview dataset. Building such index, also called __composite indicator__, is among the regular and expected task of any humanitarian data analyst.The objective is to summarize information into a simple indicator that can reduce information overflow. __Severity index__ informs the sectoral and inter-sectoral discussions taking place as part of the Humanitarian Needs Overview (HNO) process, in particular facilitating a comparison of needs across geographic areas.
 <!--MORE-->
 
 An approach to follow for this is described in the _Annex1: Technical Guidance_ of the 2014 [GUIDANCE: Humanitarian Needs Comparison Tool](https://www.humanitarianresponse.info/sites/www.humanitarianresponse.info/files/documents/files/Comparison%20Tool%20Guidance%202015%20FINAL-EN.pdf#page=12). Those guidance were provided with a [complex and heavy excel tool](https://www.humanitarianresponse.info/sites/www.humanitarianresponse.info/files/documents/files/Nigeria_HNO_Comparison_Tool_v0.1.zip) that includes many macros script and [13 pages of narrative explanation](https://www.humanitarianresponse.info/sites/www.humanitarianresponse.info/files/documents/files/Comparison%20Tool%20Technical%20Instructions.pdf) to explain how it works. 
 
 
-Rather than using script through complicated _Macros_, using R is a good and easier alternative. Build those severity index though a documented and linear process brings more credibility in the severity index generation as the analysis becomes de facto entirely reproducible (as a difference with complex excel spreadsheet with macro formula spread around multiple worksheet). Existing packages such as [R Compind package](http://complexity.stat.unipd.it/system/files/Vidoli_Fusco.pdf) for composite indicators have already been developed and released as open source and therefore ready to be leveraged without any software procurement. The analysis below is fully reproducible and all code, including a summary powerpoint, is accessible [here](https://github.com/protection-cluster/severity-index-bahamas)
+Rather than using script through complicated _Macros_, using R is a good and easier alternative. Build those severity index though a documented and linear process brings more credibility in the severity index generation as the analysis becomes de facto entirely reproducible (as a difference with complex excel spreadsheet with macro formula spread around multiple worksheet). Existing packages such as [R Compind package](http://complexity.stat.unipd.it/system/files/Vidoli_Fusco.pdf) for composite indicators have already been developed and released as open source and therefore ready to be leveraged without any software procurement. The analysis below is fully reproducible and all code, including a summary power point, is accessible [here](https://github.com/protection-cluster/severity-index-bahamas)
 
 As the analysis workflow shall remain the same, anyone can take and study this tutorial source code, then change the dataset behind with their own in order to re-use it.
 
@@ -574,7 +574,7 @@ names(ci_bod_est) <- "Benef_Doubt"
 
 ### Directional Benefit of the Doubt (D-BoD)
 
-Directional Benefit of the Doubt (D-BoD) model enhance non-compensatory property by introducing directional penalties in a standard BoD model in order to consider the preference structure among simple indicators. This method is described in the article [Enhancing non compensatory composite indicators: a directional proposal](https://www.aisre.it/images/old_papers/AISRE.pdf).
+Directional Benefit of the Doubt (D-BoD) model enhances non-compensatory property by introducing directional penalties in a standard BoD model in order to consider the preference structure among simple indicators. This method is described in the article [Enhancing non compensatory composite indicators: a directional proposal](https://www.aisre.it/images/old_papers/AISRE.pdf).
 
 ```{r, message=FALSE, warning=FALSE}
 ## Endogenous weight - no zero weight --
@@ -588,7 +588,7 @@ names(ci_bod_dir_est) <- "Benef_Doubt_Dir"
 
 ### Robust Benefit of the Doubt approach (RBoD) 
 
- ci_rbod_est is the robust version of the BoD method. It is based on the concept of the expected minimum input function of order-m so "in place of looking for the lower boundary of the support of F, as was typically the case for the full-frontier (DEA or FDH), the order-m efficiency score can be viewed as the expectation of the maximal score, when compared to m units randomly drawn from the population of units presenting a greater level of simple indicators", Daraio and Simar (2005). This method is described with more detail in the article [Robust weighted composite indicators by means of frontier methods with an application to European infrastructure endowment](http://sa-ijas.stat.unipd.it/sites/sa-ijas.stat.unipd.it/files/06.pdf).
+ This method is the robust version of the BoD method. It is based on the concept of the expected minimum input function of order-m so "in place of looking for the lower boundary of the support of F, as was typically the case for the full-frontier (DEA or FDH), the order-m efficiency score can be viewed as the expectation of the maximal score, when compared to m units randomly drawn from the population of units presenting a greater level of simple indicators", Daraio and Simar (2005). This method is described with more detail in the article [Robust weighted composite indicators by means of frontier methods with an application to European infrastructure endowment](http://sa-ijas.stat.unipd.it/sites/sa-ijas.stat.unipd.it/files/06.pdf).
 
 ```{r, message=FALSE, warning=FALSE}
 CI_RBoD_estimated <-  ci_rbod(this.indic.matrix.norm,
@@ -602,7 +602,7 @@ names(ci_rbod_est) <- "Benef_Doubt_Rob"
 
 ### Benefit of the Doubt approach (BoD) index with constraints on weights 
 
-ci_bod_constr_est_mpi allows for constraints (so that there is none not valued) and with a penalty as proposed by Mazziotta - Pareto (also adopted by the Italian National Institute of Statistics). This method is described in the article [Geometric mean quantity index numbers with Benefit-of-the-Doubt weights](https://www.sciencedirect.com/science/article/abs/pii/S0377221716305938) 
+ This method allows for constraints (so that there is none not valued) and with a penalty as proposed by Mazziotta - Pareto (also adopted by the Italian National Institute of Statistics). This method is described in the article [Geometric mean quantity index numbers with Benefit-of-the-Doubt weights](https://www.sciencedirect.com/science/article/abs/pii/S0377221716305938) 
 
 ```{r, message=FALSE, warning=FALSE}
 CI_BoD_MPI_estimated = ci_bod_constr_mpi(this.indic.matrix.norm,
@@ -618,7 +618,7 @@ names(ci_bod_constr_est_mpi) <- "Benef_Doubt_Cons"
 
 ### Factor analysis 
 
- ci_factor_est groups together simple indicators to estimate a composite indicator that captures as much as possible of the information common to individual indicators.
+ This method groups together simple indicators to estimate a composite indicator that captures as much as possible of the information common to individual indicators.
  
 
 ```{r, message=FALSE, warning=FALSE}
@@ -637,7 +637,7 @@ names(ci_factor_est) <- "Factor"
 
 ### Mean-Min Function (MMF) 
  
- ci_mean_min_est is an intermediate case between arithmetic mean, according to which no unbalance is penalized, and min function, according to which the penalization is maximum. It depends on two parameters that are respectively related to the intensity of penalization of unbalance (alpha) and intensity of complementarity (beta) among indicators. "An unbalance adjustment method for development indicators"
+ This method is an intermediate case between arithmetic mean, according to which no unbalance is penalized, and min function, according to which the penalization is maximum. It depends on two parameters that are respectively related to the intensity of penalization of unbalance (alpha) and intensity of complementarity (beta) among indicators. "An unbalance adjustment method for development indicators"
 
 ```{r, message=FALSE, warning=FALSE}
 CI_mean_min_estimated <- ci_mean_min(this.indic.matrix.norm,
@@ -766,22 +766,56 @@ rm( ci_bod_constr_est_mpi, # Robust Benefit of the Doubt approach with constrain
 
 ```
 
-###  Differences between algorithm
+###  Differences between algorithms
 
 The various Index can be normalised again on a 0 to 1 scale in order to be compared. A specific treatment if necessary for index based on Factor analysis
 
 ```{r, message=FALSE, warning=FALSE, fig.height= 10, fig.width= 10}
 
+## Directory of algorythms..
+methodo <- c("Benef_Doubt",
+          "Benef_Doubt_Rob",
+          "Benef_Doubt_Dir",
+          "Benef_Doubt_Cons",
+          "Factor",
+          "Mean_Geom",
+          "Mean_Min",
+          "Mazziotta_Pareto",
+          "Wroclaw")
+
+label <- c(    "Benefit of the Doubt Approach",
+               "Robust Benefit of the Doubt Approach",
+               "Directional Robust Benefit of the Doubt Approach",
+               "Robust Benefit of the Doubt approach with constraint",
+               "Factor Analysis Componnents",
+               "Geometric Aggregation",
+               "Mean-Min Function",
+               "Mazziotta-Pareto Index",
+               "Wroclaw Taxonomy")
+polarity <- c( "POS",
+                "POS",
+                "POS",
+                "POS",
+                "POS",
+                "POS",
+                "POS",
+                "POS",
+                "NEG")
+
+All.method <- as.data.frame( cbind(methodo, label,polarity))
+
+
 ## Factor analysis can provide negative rank - If it works we need to get rid of them
 for (j in 1:nrow(this.indic.matrix.norm22)) {
 this.indic.matrix.norm22[j ,c("Factor")] <- ifelse( min(this.indic.matrix.norm22[ ,c("Factor")]) < 0 ,
-                                                     this.indic.matrix.norm22[j ,c("Factor")] + abs(min(this.indic.matrix.norm22[ ,c("Factor")])) ,
+                                                    this.indic.matrix.norm22[j ,c("Factor")] + 
+                                                      abs(min(this.indic.matrix.norm22[ ,c("Factor")])) ,
                                                      this.indic.matrix.norm22[j ,c("Factor")]) 
 }
 
 kept.methodo <- as.data.frame(names(this.indic.matrix.norm22))
-kept.methodo$polarity <- "POS"
-polarity2 <- as.character(kept.methodo$polarity)
+polarity2 <- as.character(All.method[ All.method$methodo %in% names(this.indic.matrix.norm22),
+                                      c("polarity") ])
 
 
 this.indic.matrix.norm3 <- normalise_ci(this.indic.matrix.norm22,
@@ -800,7 +834,6 @@ kable(this.indic.matrix.norm3, caption = "Location Ranking with different algori
 Let's write this back to the excel doc
 
 ```{r, message=FALSE, warning=FALSE, fig.height= 10, fig.width= 10}
-
 datawrite <- cbind(this.indic.df,
   this.indic.matrix.norm,
   this.indic.matrix.norm22,
@@ -811,7 +844,7 @@ xlsx::addDataFrame(datawrite, choicesSheet, col.names = TRUE, row.names = TRUE)
 xlsx::saveWorkbook(wb, "DTM R3 DB Great-Little Abaco MSLA V5.xlsx")
 ```
 
-We can now build a visualisation for the comparison between different valid methods.
+We can now build a visualization for the comparison between different valid methods.
 
 ```{r, message=FALSE, warning=FALSE, fig.height= 10, fig.width= 10}
 ## Remove NaN
@@ -862,88 +895,94 @@ print(ggpubr::ggarrange(left_align(line, c("subtitle", "title")), ncol = 1, nrow
 ```
 
 
+### Index sensitivity to method 
+
+As we can see, the final ranking for each location is very sensitive to the methods.
+
+An approach to select the method can be to identify, average ranks per method in order to identify the method that is getting closer this average ranks.
+
+we can first visualise those average ranks.
+
+```{r, message=FALSE, warning=FALSE, echo = FALSE}
 
 
-### Severity Index on a map
+## Removing blank variable for nice chart display
+this.indic.matrix.norm4$Location <- NULL
 
-```{r, message=FALSE, warning=FALSE, fig.height= 10, fig.width= 10}
-## For mapping we normalise on mena-max
-var <- c("Benef_Doubt", 
-           "Benef_Doubt_Rob", 
-           "Benef_Doubt_Dir",
-           "Benef_Doubt_Cons",
-           "Factor",
-           "Mean_Geom",       
-           "Mean_Min",
-           "Mazziotta_Pareto",
-           "Wroclaw" )
+this.indic.matrix.norm5 <- this.indic.matrix.norm4
+this.indic.matrix.norm5$Average <- rowMeans(this.indic.matrix.norm4, na.rm = FALSE, dims = 1:ncol(this.indic.matrix.norm4))
 
-label <- c( "Benefit of the Doubt approach",
-               "Robust Benefit of the Doubt approach",
-               "Directional Robust Benefit of the Doubt approach",
-               "Robust Benefit of the Doubt approach with constraint",
-               "Factor analysis  componnents",
-               "Geometric aggregation",
-               "Mean-Min Function",
-               "Mazziotta-Pareto Index",
-               "Wroclaw taxonomy method")
-polarity <- c( "POS",
-                "POS",
-                "POS",
-                "POS",
-                "POS",
-                "POS",
-                "POS",
-                "POS",
-                "NEG")
+library(matrixStats)
+this.indic.matrix.norm5$Min <- rowMins(as.matrix(this.indic.matrix.norm4))
+this.indic.matrix.norm5$Max <- rowMaxs(as.matrix(this.indic.matrix.norm4)) 
+this.indic.matrix.norm5$Location <- row.names(this.indic.matrix.norm4)
 
-All.method <- as.data.frame( cbind(var, label,polarity))
+this.indic.matrix.norm5$Location <- reorder(this.indic.matrix.norm5$Location, this.indic.matrix.norm5$Average)
 
-## Filter method that are kept
-All.method2 <- All.method[All.method$var %in% names(this.indic.matrix.norm22), ]
+plot1 <- ggplot(data = this.indic.matrix.norm5, 
+                aes( x = Location, 
+                     y = Average, 
+                     ymin = Min,
+                     ymax = Max)) +
+  # geom_pointrange(color = "purple", shape = 18,  size = 2) + 
+  
+  geom_point(color = "purple", shape = 18,  size = 5) + 
+  geom_errorbar(aes(xmax = Max, xmin = Min), height = 1, color = "black", width = 0.2, size = 1) +
+  
+  #geom_hline(yintercept = 1, lty = 2) +  # add a dotted line at x=1 after flip
+  coord_flip() +  # flip coordinates (puts labels on y axis)
+  xlab("Preference Level") +
+  ylab("") +
+  labs(title = paste0("Sensitivity Visualisation for ",
+                      this.dimension ) ,
+       subtitle =  "Average, Max and Min ranks based on aggregation methods",
+       caption = "Dots represent the average. Black lines around the point represent the the maximum and minum ranks depending on methods") +
+  bbc_style() +
+  theme( plot.title = element_text(size = 15),
+         plot.subtitle = element_text(size = 12),
+         plot.caption = element_text(size = 7, hjust = 1),
+         axis.text = element_text(size = 9),
+         panel.grid.major.x = element_line(color = "#cbcbcb"), 
+         panel.grid.major.y = element_blank(),
+         strip.text.x = element_text(size = 11))
 
-## Filter method that are kept
-All.method2 <- All.method[All.method$var %in% names(this.indic.matrix.norm22), ]
-polarity2 <- as.character(All.method2[ , c("polarity")])
-
-this.indic.matrix.norm3 <- normalise_ci(this.indic.matrix.norm22,
-                                        c(1:ncol(this.indic.matrix.norm22)),
-                                        polarity =  polarity2,
-                                        method = 2)
-this.indic.matrix.norm3 <- this.indic.matrix.norm3$ci_norm * 100
-
-## Creating a spatial Point data frame with coordinates
-abaco <- SpatialPointsDataFrame(data[ ,c("C_103_lon","C_102_lat")], ## Coord
-                                cbind(as.data.frame(this.indic.matrix.norm3),data[ ,c("D_101_fams","D_102_inds","C_101_name")] ), ## Composite with different algo - together with population
-                                proj4string = CRS("+init=epsg:4326") ) ## Define projection syst 
-
-## Create equivalent polygo with voronoi
-# Using the union of points instead of the original sf object works:
-voronoi <- st_voronoi(st_union(st_as_sf(abaco)))
-# Clid boundary instead of the original island boundaries
-
-
-abacomask <- readOGR( paste0(getwd(),"/abaco.geojson"))
-abacopoly <- st_intersection(st_union(st_as_sf(abacomask)),
-                             st_cast(voronoi))
-abacopoly2 <- as(abacopoly, "Spatial")
-
-rownames(abaco@data) <- NULL
-abaco@data$ID <- rownames(abaco@data)
-abacodata <- as.data.frame(abaco@data)
-rownames(abacodata) <- paste0("ID",abaco$ID)
-abacopoly3 <- SpatialPolygonsDataFrame(abacopoly2, abacodata)
-
+ggpubr::ggarrange(left_align(plot1, c("subtitle", "title", "caption")), ncol = 1, nrow = 1)
 
 ```
 
-Get the background map from OSM. This requires a bit of testing to have the correct background aligned with the 
+Next is to compute standard deviation for each method.
+
+
+```{r, message=FALSE, echo = FALSE, warning=FALSE}
+
+
+### Identify less sensitve method
+sensitivity <- data.frame(
+  method  = character(),
+  spread  = numeric(), 
+  stringsAsFactors = FALSE
+)
+
+for (i in 1:ncol(this.indic.matrix.norm4)) {
+  sensitivity[ i, c("method")]   <- names(this.indic.matrix.norm4)[i]
+  sensitivity[ i,  c("spread")]  <- sd(this.indic.matrix.norm5[ , c("Average")] - this.indic.matrix.norm5[ , i ] )
+  }
+
+this.var  <- as.character(sensitivity[ which.min(sensitivity$spread), c("method")])
+this.label <- as.character(All.method[All.method$methodo == this.var , c("label")])
+this.composite <- as.data.frame(this.indic.matrix.norm22[ ,this.var ])
+names(this.composite)[1] <- this.var
+```
+
+### Severity Index on a map
+
+We can now visualise the thematic indicator on a map.
+
+First, let's get the background map from OSM. This requires a bit of testing to have the correct background aligned with the map bounding box.
 
 ```{r, message=FALSE, warning=FALSE, fig.height= 10, fig.width= 7}
 #plot(abaco)
 # Create a boundary box
-
-
 ## https://www.openstreetmap.org/export#map=9/26.4226/-77.3259
 longitudes <- c(-78.3, -76.3)
 latitudes <- c(27.09, 25.75)
@@ -964,85 +1003,114 @@ abaco.osm <- getTiles(
 #tilesLayer(x = abaco.osm)
 ```
 
-Generating now maps for each approach through a loop.
+Second step is to create a SpatialPointDataFrame with correct data and present it. 
 
-```{r, message=FALSE, warning=FALSE, fig.height= 7, fig.width= 9}
+An initial visualisation will be to present both the severity and the population size affected by this severity.
+
+```{r, message=FALSE, warning=FALSE, fig.height= 10, fig.width= 10}
+
+## Creating a spatial Point data frame with coordinates
+abaco <- SpatialPointsDataFrame(data[ ,c("C_103_lon","C_102_lat")], ## Coord
+                                cbind(this.composite,
+                                      data[ ,c("D_101_fams","D_102_inds","C_101_name")] ),  ## Composite with different algo - together with population
+                                proj4string = CRS("+init=epsg:4326") ) ## Define projection syst 
 
 
-for (h in 1:nrow(All.method2)) {
-  #h <- 1
-  this.var <- as.character(All.method2[ h, c("var")])
-  this.label <- as.character(All.method2[ h, c("label")])
-  
-  
-  # get Map Background
-  tilesLayer(x = abaco.osm)
-  #Plot symbols with choropleth coloration
-  propSymbolsChoroLayer(
-    spdf = abaco,
-    var = "D_102_inds",
-    inches = 0.15, ## size of the biggest symbol (radius for circles, width for squares, height for bars) in inches.
-    border = "grey50",
-    lwd = 1, #width of symbols borders.
-    legend.var.pos = "topright",
-    legend.var.title.txt = "Population Size\n(# of Individual)",
-    var2 = this.var ,
-    #classification method; one of "sd", "equal", "quantile", "fisher-jenks","q6", "geom", "arith", "em" or "msd" 
-    method = "quantile",  
-    nclass = 5,
-    col = carto.pal(pal1 = "sand.pal", n1 = 6),
-    #legend.var2.values.rnd = -2,
-    legend.var2.pos = "left",
-    legend.var2.title.txt = "Index Value\n (scale 0 to 100)",
-    legend.var.style = "e",
-    add = TRUE
-  )
-  # Layout
-  layoutLayer(title = paste0("Protection Index - based on ",this.label ),
-              author = "Protection Working Group, Abaco - The Bahamas, November 2019",
-              sources = "Source: Key Informant Interview - HDX/DTM/IOM", 
-              tabtitle = TRUE, 
-              frame = FALSE ,
-              bg = "#aad3df",
-              scale = "auto")
-  # North arrow
-  north(pos = "topleft")
-  
-  ### Now getting second  smoothed map
-  smoothLayer(
-    spdf = abacopoly3,
-    var = this.var ,
-    ###  "pareto" (means power law) or "exponential"
-    typefct = "pareto",
-    # distance where the density of probability of the spatial interaction function equals 0.5.
-    span = 5000,
-    # impedance factor for the spatial interaction function.
-    beta = 8, 
-    nclass = 5,
-    col = carto.pal(pal1 = 'brown.pal', n1 = 6),
-    border = "grey",
-    lwd = 0.1,
-    mask = abacopoly,
-    #legend.values.rnd = -3,
-    legend.title.txt = "Severity\nIndex",
-    legend.pos = "topright"
-  )
-  # annotation on the map
-  text(x = 692582, y = 1611478, cex = 0.8, adj = 0, font = 3,  labels =
-         "Distance function:\n- type = pareto\n- beta = 8\n- span = 5 km")
-  # Layout
-  layoutLayer(title = paste0("Protection Index Spread - based on ",this.label ),
-              author = "Protection Working Group, Abaco - The Bahamas, November 2019",
-              sources = "Source: Key Informant Interview - HDX/DTM/IOM",
-              tabtitle = TRUE,
-              frame = FALSE ,
-              bg = "#aad3df",
-              scale = "auto")
-  # North arrow
-  north(pos = "topleft")
+# get Map Background
+tilesLayer(x = abaco.osm)
+#Plot symbols with choropleth coloration
+propSymbolsChoroLayer(
+  spdf = abaco,
+  var = "D_102_inds",
+  inches = 0.25, ## size of the biggest symbol (radius for circles, width for squares, height for bars) in inches.
+  border = "grey50",
+  lwd = 1, #width of symbols borders.
+  legend.var.pos = "topright",
+  legend.var.title.txt = "Population Size\n(# of Individual)",
+  var2 = this.var ,
+  #classification method; one of "sd", "equal", "quantile", "fisher-jenks","q6", "geom", "arith", "em" or "msd" 
+  method = "quantile",  
+  nclass = 5,
+  col = carto.pal(pal1 = "sand.pal", n1 = 6),
+  #legend.var2.values.rnd = -2,
+  legend.var2.pos = "left",
+  legend.var2.title.txt = "Index Value\n",
+  legend.var.style = "e"
+)
+# Layout
+layoutLayer(title = paste0( "Severity  Index for ", this.dimension, " based on ",this.label ),
+            author = "Protection Working Group, Abaco - The Bahamas, November 2019",
+            sources = "Source: Key Informant Interview - HDX/DTM/IOM", 
+            tabtitle = TRUE, 
+            frame = FALSE ,
+            bg = "#aad3df",
+            scale = "auto")
+# North arrow
+north(pos = "topleft")
 
-  
-}
 
 ```
 
+
+We can also try to present this information, using a smoothed map. For that we need to create first polygons based on points using the voronoi algorithm. Note that we use here the polygon mask for the island and that data are being re-projected (UTM-19N, i.e. epsg:32618) before producing the polygons. 
+
+```{r, message=FALSE, warning=FALSE, fig.height= 7, fig.width= 9}
+## Prepare maps...
+
+abacomask <- readOGR( paste0(getwd(),"/abaco.geojson"), verbose = FALSE)
+abacomask <- spTransform(abacomask, CRS("+init=epsg:32618"))
+            
+
+## Create equivalent polygo with voronoi
+# Using the union of points instead of the original sf object works:
+voronoi <- st_voronoi(st_union(st_as_sf(spTransform(abaco, CRS("+init=epsg:32618")))))
+# Clid boundary instead of the original island boundaries
+abacopoly <- st_intersection(st_union(st_as_sf(abacomask)),
+                             st_cast(voronoi))
+abacopoly <- as(abacopoly, "Spatial")
+
+rownames(abaco@data) <- NULL
+abaco@data$ID <- rownames(abaco@data)
+abacodata <- as.data.frame(abaco@data)
+rownames(abacodata) <- paste0("ID",abaco$ID)
+abacopoly <- SpatialPolygonsDataFrame(abacopoly, abacodata)
+
+
+```
+
+And now the smmoothed map - note the parameters: `typefct`, `span` and `beta` that requires a bit of testing for a correct visualisation.
+
+```{r, message=FALSE, echo = FALSE, warning=FALSE}  
+  
+smoothLayer(
+  spdf = abacopoly,
+  var = this.var ,
+  ###  "pareto" (means power law) or "exponential"
+  typefct = "pareto",
+  # distance where the density of probability of the spatial interaction function equals 0.5.
+  span = 1000,
+  # impedance factor for the spatial interaction function.
+  beta = 1, 
+  nclass = 5,
+  col = carto.pal(pal1 = 'brown.pal', n1 = 6),
+  border = "grey",
+  lwd = 0.1,
+  mask = abacopoly,
+  #legend.values.rnd = -3,
+  legend.title.txt = "Severity\nIndex",
+  legend.pos = "topright"
+)
+# annotation on the map
+text(x = 200965, y = 2926986, cex = 0.8, adj = 0, font = 3,  labels =
+       "Distance function:\n- type = pareto\n- beta = 1\n- span = 1 km")
+# Layout
+layoutLayer(title = paste0("Index Spread for ", this.dimension, " based on ",this.label ),
+            author = "Protection Working Group, Abaco - The Bahamas, November 2019",
+            sources = "Source: Key Informant Interview - HDX/DTM/IOM",
+            tabtitle = TRUE,
+            frame = FALSE ,
+            bg = "#aad3df",
+            scale = "auto")
+# North arrow
+north(pos = "topleft")
+```
